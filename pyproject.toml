@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fleet-battery-intelligence"
+version = "1.0.0"
+description = "Synthetic fleet battery analytics reference platform"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools]
+packages = ["fleet"]
+
+[tool.setuptools.package-data]
+fleet = ["schema.sql", "static/*"]
+

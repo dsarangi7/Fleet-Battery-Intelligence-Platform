@@ -1,0 +1,29 @@
+services:
+  init:
+    build: .
+    command: [python, -m, fleet, demo, --data, /data]
+    volumes: [warehouse:/data]
+  api:
+    build: .
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    ports: ["127.0.0.1:8080:8080"]
+    volumes: [warehouse:/data]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8080/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  scheduler:
+    build: .
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    command: [python, -m, fleet, schedule, --data, /data, --interval, "3600"]
+    volumes: [warehouse:/data]
+    restart: unless-stopped
+volumes:
+  warehouse:
+

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Synthetic fleet battery analytics: condition-matched diagnostics, capacity trends and data quality.">
+  <title>Fleet Battery Intelligence Platform</title>
+  <link rel="stylesheet" href="/dashboard.css">
+  <script src="/dashboard.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to fleet overview</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Fleet Battery Intelligence home"><span class="brand-mark" aria-hidden="true">F<span>i</span></span><span>Fleet Intelligence<span class="brand-sub">BATTERY SYSTEMS</span></span></a>
+    <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#assets">Assets</a><a href="#diagnostics">Diagnostics</a><a href="#quality">Data quality</a></nav>
+    <span class="environment"><span class="dot"></span>Synthetic fleet</span>
+  </header>
+  <main id="main">
+    <section id="overview" class="overview">
+      <div class="page-heading"><div><p class="eyebrow">ENGINEERING OPERATIONS / FLEET OVERVIEW</p><h1>Fleet Battery Intelligence</h1><p class="subtitle">Capacity trends, operating context, and evidence for engineering review.</p></div><div class="actions"><a class="quiet-link" href="/api">API index <span aria-hidden="true">&#8599;</span></a><button id="refresh" type="button"><span aria-hidden="true">&#8635;</span> Refresh data</button></div></div>
+      <div class="context"><span id="run-status" role="status">Connecting to warehouse...</span><span>Original synthetic telemetry <span class="separator">/</span> No operational data</span></div>
+      <div id="error" class="error" role="alert" hidden></div>
+      <div class="metrics" aria-label="Latest fleet metrics">
+        <article><span class="metric-label">Observed packs</span><strong id="pack-count">--</strong><span id="cell-count" class="metric-note">Awaiting data</span></article>
+        <article><span class="metric-label">Mean capacity SOH</span><strong id="fleet-soh">--</strong><span class="metric-note">Equally weighted packs</span></article>
+        <article><span class="metric-label">Voltage alert sessions</span><strong id="alert-count" class="amber">--</strong><span class="metric-note">Latest observed day</span></article>
+        <article><span class="metric-label">Scored coverage</span><strong id="coverage">--</strong><span class="metric-note">Observed cell sessions, latest day</span></article>
+      </div>
+      <div class="analysis-grid">
+        <section class="trend"><div class="section-head"><div><p class="eyebrow">OBSERVED CAPACITY</p><h2>Health across the fleet</h2></div><label class="control">Window<select id="window"><option value="all">All observations</option><option value="14">Last 14 days</option><option value="7">Last 7 days</option></select></label></div><div id="fleet-chart" class="chart" aria-label="SOH trend chart"></div><div id="legend" class="legend"></div><p class="footnote">Capacity SOH from independent synthetic SOC references. Observed trend, no lifetime forecast.</p></section>
+        <aside class="watch"><p class="eyebrow">REVIEW QUEUE</p><h2>Engineering signals</h2><div id="signals" class="signals"><p>Loading signals...</p></div><div class="watch-note"><span class="dot"></span>Condition-matched voltage baselines<p>SOC, discharge C-rate and temperature. Unmatched conditions remain unscored.</p></div></aside>
+      </div>
+    </section>
+    <section id="assets" class="band">
+      <div class="section-head"><div><p class="eyebrow">ASSET REGISTER</p><h2>Pack-level intelligence</h2></div><label class="control">Pack<select id="pack"><option value="all">All packs</option></select></label></div>
+      <div class="table-wrap"><table><caption class="sr-only">Latest available pack metrics</caption><thead><tr><th>Pack / topology</th><th>Review status</th><th>Mean SOH</th><th>Weakest SOH</th><th>Nominal-capacity SOC</th><th>Voltage spread</th><th>Observed fade</th></tr></thead><tbody id="pack-rows"></tbody></table></div>
+      <p class="footnote">Pack SOH is a descriptive cell mean. SOC integrates discharge using nominal capacity; it can drift as capacity fades.</p>
+    </section>
+    <section id="diagnostics" class="band">
+      <div class="section-head"><div><p class="eyebrow">DIAGNOSTIC EVIDENCE</p><h2>Condition-matched voltage deviations</h2></div><label class="control">Sessions<select id="session-filter"><option value="alerts">Alert sessions</option><option value="unscored">Unscored sessions</option><option value="all">All sessions</option></select></label></div>
+      <p class="section-description">Latest 50 matching sessions. A voltage alert requires at least three deviating samples within a matched discharge session.</p>
+      <div class="table-wrap"><table><caption class="sr-only">Cell session diagnostic evidence</caption><thead><tr><th>Cell identity</th><th>Day</th><th>Median residual</th><th>Minimum peers</th><th>Capacity SOH</th><th>Status</th></tr></thead><tbody id="diagnostic-rows"></tbody></table></div>
+    </section>
+    <section id="quality" class="band quality-band">
+      <div><p class="eyebrow">TRUST &amp; TRACEABILITY</p><h2>Data quality before decisions</h2><p class="section-description">Every batch retains acceptance counts and rejection evidence. Incomplete sessions stay visible in the metric hierarchy.</p><a class="quiet-link" href="/api/quality_issues">Inspect rejection evidence <span aria-hidden="true">&#8599;</span></a></div>
+      <div class="quality-grid"><div><span>Accepted samples</span><strong id="accepted">--</strong></div><div><span>Rejected samples</span><strong id="rejected">--</strong></div><div><span>Invalid sessions</span><strong id="invalid">--</strong></div><div><span>Missing cells</span><strong id="missing">--</strong></div></div>
+    </section>
+    <footer><span>Fleet Battery Intelligence Platform <span class="separator">/</span> Engineering portfolio</span><span>Synthetic demonstration. Investigation support only.</span></footer>
+  </main>
+</body>
+</html>
