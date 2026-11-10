@@ -124,7 +124,7 @@ async function load() {
   try {
     const names = ['fleet_daily','pack_daily','cell_metrics','degradation','quality_summary','ingestion_runs'];
     const entries = await Promise.all(names.map(async name => {
-      const response = await fetch(`/api/${name}?limit=10000`);
+      const response = await fetch(document.documentElement.dataset.static === 'true' ? `api/${name}.json` : `/api/${name}?limit=10000`);
       if (!response.ok) throw new Error(`Warehouse query failed (${response.status}).`);
       const body = await response.json();
       if (!Array.isArray(body.rows)) throw new Error('Unexpected warehouse response.');

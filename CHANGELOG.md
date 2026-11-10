@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-10
+- Added GitHub Pages deployment with reproducible synthetic snapshot export and subpath-compatible dashboard assets.
+
 ## 2026-10-19 Repository setup
 - Designated dsarangi7/Fleet-Battery-Intelligence-Platform as the project repository.
 - Prepared source, tests, dashboard, documentation, CI and Docker configuration for GitHub.
